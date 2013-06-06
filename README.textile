@@ -1,13 +1,14 @@
 h1. Bbuzzinga hackathon
 
 h2. Storm topology to get and process frames from a video stream
+
 This storm example is just a funny way to learn something more about `storm`, 
 so don't expect to find here hard or smart analyzing :)
 
 This topology takes a video stream, extracts some frames from it, then converts them to grayscal and puts to S3 bucket.
 At the same time it also prints frame size into log file.
 
-h3. Packages & technologies we use
+h3. Dependencies
 
 * aws client 1.4.5
 * storm 0.8.2
@@ -22,12 +23,15 @@ h3. Installation
 
 * install and configure "storm 0.8.2":https://github.com/nathanmarz/storm/tree/0.8.2 
 We use leiningen 1.7.0, not the recent one.
-* download "xuggle 5.4":http://xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-5.4.jar
+* since zuggle has no candidate from maven2 we need to include it manually. Download "xuggle 5.4":http://xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-5.4.jar
+
 <pre>
 cd /tmp
 wget http://xuggle.googlecode.com/svn/trunk/repo/share/java/xuggle/xuggle-xuggler/5.4/xuggle-xuggler-5.4.jar
 </pre>
+
 * add it the the local maven repository:
+
 <pre>
 mvn install:install-file -DgroupId=xuggle -DartifactId=xuggle-xuggler -Dversion=5.4 -Dpackaging=jar -Dfile=/tmp/xuggle-xuggler-5.4.jar
 </pre>
@@ -35,7 +39,8 @@ mvn install:install-file -DgroupId=xuggle -DartifactId=xuggle-xuggler -Dversion=
 
 h3. Deployment
 
-Assume, you have configured storm cluster with nimbus running on server with name "nimbus.example.com"
+Assume, you have configured storm cluster with nimbus running on server with name "nimbus.example.com".
+
 <pre>
 cd /your/path/bbuzz-storm/
 lein deps
@@ -43,3 +48,4 @@ lein compile
 lein uberjar
 storm jar bbuzz-storm-1.0.0-SNAPSHOT-standalone.jar storm.bbuzz.BbuzzTopology bbuzz storm.cfg -c nimbus.host=numbus.example.com
 </pre>
+

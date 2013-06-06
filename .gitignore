@@ -4,3 +4,11 @@
 *.jar
 *.war
 *.ear
+bbuzz-storm-*.jar
+.lein-deps-sum
+.lein-failures
+classes/
+lib/
+pom.xml
+maven_repository
+
